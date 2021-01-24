@@ -1,15 +1,16 @@
-import {api} from '../API/webapi';
-import store from '../../redux/store';
+import { api } from "../API/webapi";
+import store from "../../redux/store";
 import {
+  setNasabah,
   setPenarikan,
   setPenjemputan,
   setPenyetoran,
-} from '../../redux/nasabahAction';
+} from "../../redux/nasabahAction";
 
 export const penyetoranNasabah = (userId) => {
-  const data = {loading: true, data: 0, error: false};
+  const data = { loading: true, data: [], error: false };
   store.dispatch(setPenyetoran(data));
-  api('GET', '/users/' + userId + '/penyetoran')
+  api("GET", "/users/" + userId + "/penyetoran")
     .then((res) => {
       if (res.code === 200) {
         data.data = res.data;
@@ -25,9 +26,9 @@ export const penyetoranNasabah = (userId) => {
 };
 
 export const penjemputanNasabah = (userId) => {
-  const data = {loading: true, data: 0, error: false};
+  const data = { loading: true, data: [], error: false };
   store.dispatch(setPenjemputan(data));
-  api('GET', '/users/' + userId + '/penjemputan')
+  api("GET", "/users/" + userId + "/penjemputan")
     .then((res) => {
       if (res.code === 200) {
         data.data = res.data;
@@ -43,9 +44,9 @@ export const penjemputanNasabah = (userId) => {
 };
 
 export const penarikanNasabah = (userId) => {
-  const data = {loading: true, data: 0, error: false};
+  const data = { loading: true, data: [], error: false };
   store.dispatch(setPenarikan(data));
-  api('GET', '/users/' + userId + '/penarikan')
+  api("GET", "/users/" + userId + "/penarikan")
     .then((res) => {
       if (res.code === 200) {
         data.data = res.data;
@@ -65,7 +66,7 @@ export const ajukanJemput = (
   nama_pengirim,
   telepon,
   lokasi,
-  keterangan,
+  keterangan
 ) => {
   const data = {
     id_nasabah: userId,
@@ -78,7 +79,7 @@ export const ajukanJemput = (
     }),
     keterangan,
   };
-  return api('POST', '/penjemputan', data);
+  return api("POST", "/penjemputan", data);
 };
 
 export const batalkanJemput = (penjemputanId, userId) => {
@@ -86,5 +87,23 @@ export const batalkanJemput = (penjemputanId, userId) => {
     id_nasabah: userId,
     status: 3,
   };
-  return api('PATCH', '/penjemputan/' + penjemputanId, data);
+  return api("PATCH", "/penjemputan/" + penjemputanId, data);
+};
+
+export const getNasabah = () => {
+  const data = { loading: true, data: [], error: false };
+  store.dispatch(setNasabah(data));
+  api("GET", "/users/")
+    .then((res) => {
+      if (res.code === 200) {
+        data.data = res.data;
+      } else {
+        data.error = res.error;
+      }
+    })
+    .catch((e) => (data.error = e.message))
+    .finally(() => {
+      data.loading = false;
+      store.dispatch(setNasabah(data));
+    });
 };

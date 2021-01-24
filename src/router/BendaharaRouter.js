@@ -8,6 +8,7 @@ import {
   GudangScreen,
   PenjualanScreen,
   SetoranScreen,
+  TabunganNasabah,
   TabunganScreen,
 } from "../screen/bendahara";
 
@@ -87,6 +88,11 @@ const BendaharaRouter = () => {
                 <Route exact path="/setoran/" component={SetoranScreen} />
                 <Route exact path="/gudang/" component={GudangScreen} />
                 <Route exact path="/tabungan/" component={TabunganScreen} />
+                <Route
+                  exact
+                  path="/tabungan/:userId"
+                  component={TabunganNasabah}
+                />
                 <Route exact path="/penjualan/" component={PenjualanScreen} />
               </Switch>
             </div>

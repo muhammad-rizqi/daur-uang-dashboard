@@ -18,7 +18,7 @@ const PenjualanScreen = () => {
         <table className="table table-in-card">
           <thead>
             <tr>
-              <th scope="col">ID Penjualan</th>
+              <th scope="col">No.</th>
               <th scope="col">Tanggal</th>
               <th scope="col">Petugas</th>
               <th scope="col">Jenis Sampah</th>
@@ -29,10 +29,10 @@ const PenjualanScreen = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((jual) => {
+            {data.map((jual, index) => {
               return (
                 <tr>
-                  <th scope="row">{jual.id}</th>
+                  <th scope="row">{index + 1}</th>
                   <td>{jual.tanggal}</td>
                   <td>{jual.relation.pengurus.nama_lengkap}</td>
                   <td>{jual.relation.jenis_sampah.nama_kategori}</td>

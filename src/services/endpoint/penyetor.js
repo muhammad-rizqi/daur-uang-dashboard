@@ -1,14 +1,14 @@
-import {api} from '../API/webapi';
-import store from '../../redux/store';
+import { api } from "../API/webapi";
+import store from "../../redux/store";
 import {
   setDataPenjemputan,
   setDataPenyetoran,
-} from '../../redux/penyetorAction';
+} from "../../redux/penyetorAction";
 
 export const getDataSetoran = () => {
-  const data = {loading: true, data: 0, error: false};
+  const data = { loading: true, data: [], error: false };
   store.dispatch(setDataPenyetoran(data));
-  api('GET', '/penyetoran')
+  api("GET", "/penyetoran")
     .then((res) => {
       if (res.code === 200) {
         data.data = res.data;
@@ -24,9 +24,9 @@ export const getDataSetoran = () => {
 };
 
 export const getDataJemputan = () => {
-  const data = {loading: true, data: 0, error: false};
+  const data = { loading: true, data: [], error: false };
   store.dispatch(setDataPenjemputan(data));
-  api('GET', '/penjemputan')
+  api("GET", "/penjemputan")
     .then((res) => {
       if (res.code === 200) {
         data.data = res.data;
@@ -46,7 +46,7 @@ export const confirmJemput = (penjemputanId, pengurusId, status) => {
     id_pengurus: pengurusId,
     status: status,
   };
-  return api('PATCH', '/penjemputan/' + penjemputanId, data);
+  return api("PATCH", "/penjemputan/" + penjemputanId, data);
 };
 
 export const addSetor = (nasabahId, jenis_sampah, berat, dijemput) => {
@@ -56,5 +56,5 @@ export const addSetor = (nasabahId, jenis_sampah, berat, dijemput) => {
     berat,
     dijemput,
   };
-  return api('POST', '/penyetoran', data);
+  return api("POST", "/penyetoran", data);
 };

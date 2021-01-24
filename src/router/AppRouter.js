@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { changeToken } from "../redux/action";
 import Login from "../screen/auth/login-screen";
 import Register from "../screen/auth/register-screen";
+import { getNasabah } from "../services/endpoint/nasabah";
 import {
   getDataPenjualan,
   getSaldoPenjualan,
@@ -28,6 +29,7 @@ export const AppRouter = () => {
       getDataPenjualan();
       getDataSetoran();
       getStok();
+      getNasabah();
     }
   }, []);
 

@@ -32,6 +32,7 @@ const nasabahState = {
   penyetoran: { loading: true, data: [], error: null },
   penarikan: { loading: true, data: [], error: null },
   penjemputan: { loading: true, data: [], error: null },
+  user: { loading: true, data: [], error: null },
 };
 
 const nasabahReducer = (state = nasabahState, action) => {
@@ -44,6 +45,8 @@ const nasabahReducer = (state = nasabahState, action) => {
       return { ...state, penarikan: action.data };
     case "SET_PENYETORAN":
       return { ...state, penyetoran: action.data };
+    case "SET_NASABAH":
+      return { ...state, user: action.data };
     default:
       return state;
   }

@@ -18,17 +18,17 @@ const GudangScreen = () => {
         <table className="table table-in-card">
           <thead>
             <tr>
-              <th scope="col">ID</th>
+              <th scope="col">No.</th>
               <th scope="col">Jenis Sampah</th>
               <th scope="col">Harga</th>
               <th scope="col">Jumlah Stok</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((sampah) => {
+            {data.map((sampah, index) => {
               return (
                 <tr>
-                  <th scope="row">{sampah.id}</th>
+                  <th scope="row">{index + 1}</th>
                   <td>{sampah.nama_kategori}</td>
                   <td>{sampah.harga}</td>
                   <td>{sampah.stok_gudang}</td>

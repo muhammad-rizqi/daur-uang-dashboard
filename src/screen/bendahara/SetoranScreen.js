@@ -17,7 +17,7 @@ const SetoranScreen = () => {
         <table className="table table-in-card">
           <thead>
             <tr>
-              <th scope="col">ID</th>
+              <th scope="col">No. </th>
               <th scope="col">Tanggal</th>
               <th scope="col">Nasabah</th>
               <th scope="col">Jenis Sampah</th>
@@ -27,10 +27,10 @@ const SetoranScreen = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((setor) => {
+            {data.map((setor, index) => {
               return (
                 <tr>
-                  <th scope="row">{setor.id}</th>
+                  <th scope="row">{index + 1}</th>
                   <td>{setor.tanggal}</td>
                   <td>{setor.relation.nasabah.nama_lengkap}</td>
                   <td>{setor.relation.jenis_sampah.nama_kategori}</td>

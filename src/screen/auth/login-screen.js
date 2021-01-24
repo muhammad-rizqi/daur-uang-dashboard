@@ -5,7 +5,7 @@ import { changeToken } from "../../redux/action";
 import { login } from "../../services/endpoint/authServices";
 import { getToken } from "../../services/storage/Token";
 
-function Login() {
+function Login({ history }) {
   // sets the value of "message" to be "saved in browser storage"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +19,7 @@ function Login() {
       .then((result) => {
         if (result.code === 200) {
           dispatch(changeToken(result.data.token));
+          history.push("/");
         } else {
           alert("Gagal Login");
         }

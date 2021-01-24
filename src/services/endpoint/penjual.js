@@ -1,15 +1,15 @@
-import {api} from '../API/webapi';
-import store from '../../redux/store';
+import { api } from "../API/webapi";
+import store from "../../redux/store";
 import {
   setPenjualan,
   setSaldoPenjual,
   setStok,
-} from '../../redux/penjualAction';
+} from "../../redux/penjualAction";
 
 export const getDataPenjualan = () => {
-  const data = {loading: true, data: 0, error: false};
+  const data = { loading: true, data: [], error: false };
   store.dispatch(setPenjualan(data));
-  api('GET', '/penjualan')
+  api("GET", "/penjualan")
     .then((res) => {
       if (res.code === 200) {
         data.data = res.data;
@@ -25,9 +25,9 @@ export const getDataPenjualan = () => {
 };
 
 export const getStok = () => {
-  const data = {loading: true, data: 0, error: false};
+  const data = { loading: true, data: [], error: false };
   store.dispatch(setStok(data));
-  api('GET', '/stok')
+  api("GET", "/stok")
     .then((res) => {
       if (res.code === 200) {
         data.data = res.data;
@@ -43,9 +43,9 @@ export const getStok = () => {
 };
 
 export const getSaldoPenjualan = () => {
-  const data = {loading: true, data: 0, error: false};
+  const data = { loading: true, data: 0, error: false };
   store.dispatch(setSaldoPenjual(data));
-  api('GET', '/penjualan/saldo')
+  api("GET", "/penjualan/saldo")
     .then((res) => {
       if (res.code === 200) {
         data.data = res.data.saldo;
@@ -68,5 +68,5 @@ export const jualSampah = (pengurusId, jenis_sampah, client, harga, berat) => {
     harga,
     berat,
   };
-  return api('POST', '/penjualan', data);
+  return api("POST", "/penjualan", data);
 };
