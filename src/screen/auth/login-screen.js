@@ -18,8 +18,8 @@ function Login({ history }) {
     login(email, password)
       .then((result) => {
         if (result.code === 200) {
-          dispatch(changeToken(result.data.token));
           history.push("/");
+          dispatch(changeToken(result.data.token));
         } else {
           alert("Gagal Login");
         }

@@ -5,6 +5,7 @@ import {
   penarikanNasabah,
   penyetoranNasabah,
 } from "../../services/endpoint/nasabah";
+import { addTarik, getSaldo } from "../../services/endpoint/tabungan";
 import { getUserData } from "../../services/endpoint/user";
 
 const TabunganNasabah = ({ history }) => {
@@ -13,8 +14,10 @@ const TabunganNasabah = ({ history }) => {
   const { nasabah } = useSelector((state) => state);
   const { userId } = useParams();
   const { data } = nasabah.penarikan;
-
+  const [saldo, setSaldo] = useState("-");
+  const [tarik, setTarik] = useState(0);
   const penyetoran = nasabah.penyetoran.data;
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     console.log(userId); // result: '/secondpage'
@@ -25,27 +28,50 @@ const TabunganNasabah = ({ history }) => {
         .then((res) => res.code === 200 && setUser(res.data.user))
         .catch((e) => console.log(e));
     }
+    getSaldo(userId)
+      .then((res) => res.code === 200 && setSaldo(res.data.saldo))
+      .catch((e) => console.log(e));
     penarikanNasabah(userId);
     penyetoranNasabah(userId);
   }, [location, userId]);
 
-  console.log(user);
+  const onClickTarik = (e) => {
+    if (tarik <= saldo || tarik > 1000) {
+      setLoading(true);
+      addTarik(userId, tarik)
+        .then((res) => {
+          if (res.code === 200) {
+            alert("berhasil");
+            history.push("/tabungan/" + userId);
+          }
+        })
+        .catch((e) => {
+          alert("gagal");
+          console.log(e);
+        })
+        .finally(() => setLoading(false));
+    } else {
+      alert("Jumlah Salah");
+    }
+    e.preventDefault();
+  };
   return (
     <div>
-      <div class="media p-3">
+      <div className="media p-3">
         {user && (
           <>
             <img
               src={user.avatar}
               alt={user.nama_lengkap}
-              class="mr-3 rounded-circle"
+              className="mr-3 rounded-circle"
               style={{ width: "60px", height: "60px" }}
             />
-            <div class="media-body">
+            <div className="media-body">
               <h4>{user.nama_lengkap}</h4>
               <p>
                 {user.email} - {user.telepon}
               </p>
+              <p>Saldo : Rp {saldo},-</p>
             </div>
           </>
         )}
@@ -60,6 +86,61 @@ const TabunganNasabah = ({ history }) => {
           Kembali
         </div>
       </div>
+
+      <button
+        type="button"
+        className="btn btn-primary my-3"
+        data-toggle="modal"
+        data-target="#myModal"
+      >
+        Tarik Tabungan
+      </button>
+
+      <div className="modal" id="myModal">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4 className="modal-title">Tarik Tabungan</h4>
+              <button type="button" className="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+            <div className="modal-body">
+              <form className="my-3">
+                <label for="tarik">Jumlah Penarikan</label>
+                <input
+                  min="1000"
+                  max={saldo}
+                  type="number"
+                  className="form-control"
+                  id="tarik"
+                  placeholder="1000"
+                  value={tarik}
+                  onInput={(e) => {
+                    setTarik(e.target.value);
+                  }}
+                />
+              </form>
+              <button
+                type="submit"
+                className="btn btn-primary mb-2"
+                onClick={onClickTarik}
+                disabled={loading}
+              >
+                {!loading ? (
+                  "Tarik"
+                ) : (
+                  <>
+                    <span className="spinner-grow spinner-grow-sm"></span>
+                    Tarik
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <ul className="nav nav-tabs">
         <li className="nav-item">
           <a className="nav-link active" data-toggle="tab" href="#penarikan">
@@ -72,7 +153,6 @@ const TabunganNasabah = ({ history }) => {
           </a>
         </li>
       </ul>
-
       <div className="tab-content">
         <div className="tab-pane active" id="penarikan">
           <div className="card table-responsive-md easion-card">
