@@ -26,16 +26,16 @@ function Login({ history }) {
       .then((result) => {
         if (result.code === 200) {
           if (result.data.user.role === 4 || result.data.user.role === 999) {
+            if (result.data.user.role === 4) {
+              history.push("/bendahara");
+            } else if (result.data.user.role === 999) {
+              history.push("/admin/");
+            } else {
+              alert("Mohon masuk di perangkat mobile");
+            }
             dispatch(changeToken(result.data.token));
             dispatch(setUser(result.data.user));
             getData();
-          }
-          if (result.data.user.role === 4) {
-            history.push("/bendahara");
-          } else if (result.data.user.role === 999) {
-            history.push("/admin");
-          } else {
-            alert("Mohon masuk di perangkat mobile");
           }
         } else {
           alert("Gagal Login");

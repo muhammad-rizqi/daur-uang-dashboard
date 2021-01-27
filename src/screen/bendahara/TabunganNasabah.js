@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import {
   penarikanNasabah,
   penyetoranNasabah,
@@ -8,7 +8,7 @@ import {
 import { addTarik, getSaldo } from "../../services/endpoint/tabungan";
 import { getUserData } from "../../services/endpoint/user";
 
-const TabunganNasabah = ({ history }) => {
+const TabunganNasabah = () => {
   const location = useLocation();
   const [user, setUser] = useState(null);
   const { nasabah } = useSelector((state) => state);
@@ -20,6 +20,7 @@ const TabunganNasabah = ({ history }) => {
   const penyetoran = nasabah.penyetoran.data;
   const [loading, setLoading] = useState(false);
 
+  const history = useHistory();
   useEffect(() => {
     console.log(userId); // result: '/secondpage'
     if (location.state) {
@@ -43,7 +44,7 @@ const TabunganNasabah = ({ history }) => {
         .then((res) => {
           if (res.code === 200) {
             alert("berhasil");
-            history.push(location.pathname + "/" + userId);
+            history.push(location.pathname);
           }
         })
         .catch((e) => {
@@ -81,7 +82,11 @@ const TabunganNasabah = ({ history }) => {
         <div
           className="easion-card-icon"
           style={{ cursor: "pointer" }}
-          onClick={() => history.push("/tabungan")}
+          onClick={() =>
+            role === 4
+              ? history.push("/bendahara/tabungan")
+              : history.push("/admin/tabungan")
+          }
         >
           <i className="fas fa-arrow-left mr-3"></i>
           Kembali
