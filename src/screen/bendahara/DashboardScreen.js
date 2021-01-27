@@ -3,17 +3,26 @@ import { useSelector } from "react-redux";
 
 const DashboardScreen = () => {
   const { penjual } = useSelector((state) => state);
+  const { user } = useSelector((state) => state.nasabah);
+
+  const userSum = !user.loading && user.data.length;
   return (
     <div className="row dash-row">
       <div className="col-xl-4">
         <div className="stats stats-primary">
-          <h3 className="stats-title"> Nasabah </h3>
+          <h3 className="stats-title"> User </h3>
           <div className="stats-content">
             <div className="stats-icon">
               <i className="fas fa-user"></i>
             </div>
             <div className="stats-data">
-              <div className="stats-number">114</div>
+              <div className="stats-number">
+                {user.loading ? (
+                  <span className="spinner-grow spinner-grow-sm"></span>
+                ) : (
+                  userSum
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -39,13 +48,19 @@ const DashboardScreen = () => {
       </div>
       <div className="col-xl-4">
         <div className="stats stats-danger">
-          <h3 className="stats-title"> Stok sampah </h3>
+          <h3 className="stats-title"> Kategori sampah </h3>
           <div className="stats-content">
             <div className="stats-icon">
               <i className="fas fa-boxes"></i>
             </div>
             <div className="stats-data">
-              <div className="stats-number">5</div>
+              <div className="stats-number">
+                {penjual.stok.loading ? (
+                  <span className="spinner-grow spinner-grow-sm"></span>
+                ) : (
+                  penjual.stok.data.length
+                )}
+              </div>
             </div>
           </div>
         </div>
