@@ -4,6 +4,7 @@ import { clearToken, setUser } from "../redux/action";
 import { reverseGeo } from "../services/API/geolocation";
 import { profile } from "../services/endpoint/authServices";
 import {
+  changeAvatar,
   changePassword,
   deleteAcount,
   updateProfile,
@@ -22,8 +23,42 @@ const Profile = () => {
   const [confirmPass, setConfirmPass] = useState("");
 
   const [deletePass, setDeletePass] = useState("");
-
+  const [img, setImg] = useState("");
   const dispatch = useDispatch();
+
+  const [selectedFile, setSelectedFile] = useState();
+  const [isFilePicked, setIsFilePicked] = useState(false);
+
+  const changeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setIsFilePicked(true);
+    var reader = new FileReader();
+
+    reader.onloadend = function (e) {
+      setImg([reader.result]);
+    };
+  };
+
+  const updateAvater = (e) => {
+    setLoading(true);
+    changeAvatar(user.id, selectedFile)
+      .then((res) => {
+        if (res.code === 200) {
+          alert("Berhasil merubah avatar");
+          updateData();
+        } else {
+          alert("Gagal merubah avatar");
+        }
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        alert("Gagal menyambung ke server");
+        console.log(e);
+      });
+
+    e.preventDefault();
+  };
 
   const getLocation = (e) => {
     if (navigator.geolocation) {
@@ -138,12 +173,12 @@ const Profile = () => {
         <div className="card-body ">
           <form>
             <div className="form-group">
-              <label htmlFor="nama-lengkap">Kata Sandi Lama</label>
+              <label htmlFor="nama-lengkap">Nama Lengkap</label>
               <input
                 type="text"
                 className="form-control"
                 id="nama-lengkap"
-                placeholder="Masukkan Kata Sandi Lama"
+                placeholder="Masukkan Nama Lengkap"
                 value={name}
                 onInput={(e) => {
                   setName(e.target.value);
@@ -279,6 +314,53 @@ const Profile = () => {
             >
               {!loading ? (
                 "Update"
+              ) : (
+                <>
+                  <span className="spinner-grow spinner-grow-sm"></span>
+                  Updating
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
+      <div className="card easion-card">
+        <div className="card-header">
+          <div className="easion-card-icon">
+            <i className="fas fa-chart-bar"></i>
+          </div>
+          <div className="easion-card-title"> Ubah Avatar </div>
+        </div>
+        <div className="card-body ">
+          {isFilePicked ? (
+            <img
+              alt="avatar"
+              src={img}
+              style={{ width: "200px", height: "200px", borderRadius: "100px" }}
+            />
+          ) : (
+            <img
+              alt="avatar"
+              src={user.avatar}
+              style={{ width: "200px", height: "200px", borderRadius: "100px" }}
+            />
+          )}
+          <form>
+            <div className="form-group">
+              <input
+                className="mt-3"
+                type="file"
+                name="file"
+                onChange={changeHandler}
+              />
+            </div>
+            <button
+              className="btn btn-primary"
+              disabled={loading}
+              onClick={updateAvater}
+            >
+              {!loading ? (
+                "Update Photo Profile"
               ) : (
                 <>
                   <span className="spinner-grow spinner-grow-sm"></span>

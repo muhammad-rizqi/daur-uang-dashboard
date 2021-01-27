@@ -38,12 +38,7 @@ export const deleteAcount = (userId, password) => {
 export const changeAvatar = (userId, avatar) => {
   const data = new FormData();
 
-  data.append("avatar", {
-    name: avatar.fileName,
-    type: avatar.type,
-    uri: avatar.uri,
-  });
-  console.log("sending");
+  data.append("avatar", avatar);
   return api("PATCH", `/users/${userId}/avatar`, data, avatar);
 };
 
