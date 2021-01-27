@@ -57,9 +57,9 @@ const TabunganNasabah = ({ history }) => {
   };
   return (
     <div>
-      <div className="media p-3">
-        {user && (
-          <>
+      {user && (
+        <>
+          <div className="media p-3">
             <img
               src={user.avatar}
               alt={user.nama_lengkap}
@@ -73,9 +73,9 @@ const TabunganNasabah = ({ history }) => {
               </p>
               <p>Saldo : Rp {saldo},-</p>
             </div>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
       <div className="p-2">
         <div
           className="easion-card-icon"
@@ -95,7 +95,6 @@ const TabunganNasabah = ({ history }) => {
       >
         Tarik Tabungan
       </button>
-
       <div className="modal" id="myModal">
         <div className="modal-dialog">
           <div className="modal-content">

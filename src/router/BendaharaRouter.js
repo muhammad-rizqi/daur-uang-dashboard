@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/role-supports-aria-props */
 import React from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
@@ -11,8 +13,9 @@ import {
   TabunganNasabah,
   TabunganScreen,
 } from "../screen/bendahara";
+import Profile from "../screen/Profile";
 
-const BendaharaRouter = () => {
+const BendaharaRouter = ({ history }) => {
   const dispatch = useDispatch();
 
   const logout = () => {
@@ -71,10 +74,14 @@ const BendaharaRouter = () => {
                   className="dropdown-menu dropdown-menu-right"
                   aria-labelledby="dropdownMenu1"
                 >
-                  <a className="dropdown-item" href="#!">
+                  <Link to="/profile/" className="dropdown-item">
                     Profile
-                  </a>
-                  <span className="dropdown-item" onClick={logout}>
+                  </Link>
+                  <span
+                    className="dropdown-item"
+                    style={{ cursor: "pointer" }}
+                    onClick={logout}
+                  >
                     Logout
                   </span>
                 </div>
@@ -94,6 +101,7 @@ const BendaharaRouter = () => {
                   component={TabunganNasabah}
                 />
                 <Route exact path="/penjualan/" component={PenjualanScreen} />
+                <Route exact path="/profile/" component={Profile} />
               </Switch>
             </div>
           </main>

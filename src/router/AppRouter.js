@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { changeToken } from "../redux/action";
+import { changeToken, setUser } from "../redux/action";
 import Login from "../screen/auth/login-screen";
 import Register from "../screen/auth/register-screen";
+import { profile } from "../services/endpoint/authServices";
 import { getNasabah } from "../services/endpoint/nasabah";
 import {
   getDataPenjualan,
@@ -17,8 +18,24 @@ import { getToken } from "../services/storage/Token";
 import BendaharaRouter from "./BendaharaRouter";
 
 export const AppRouter = () => {
-  const { token } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [splash, setSplash] = useState(true);
+  const { token, user } = useSelector((state) => state);
+
+  const getProfile = () => {
+    profile()
+      .then((res) => {
+        if (res.code === 200) {
+          dispatch(setUser(res.data.user));
+        }
+        setSplash(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        alert(e);
+        setSplash(false);
+      });
+  };
 
   useEffect(() => {
     const dataToken = getToken();
@@ -30,8 +47,15 @@ export const AppRouter = () => {
       getDataSetoran();
       getStok();
       getNasabah();
+      getProfile();
+    } else {
+      setSplash(false);
     }
   }, []);
+
+  if (splash) {
+    return <h1>Loading...</h1>;
+  }
 
   if (token === null || token === "") {
     return (
