@@ -113,7 +113,7 @@ const TabunganNasabah = () => {
                 </div>
                 <div className="modal-body">
                   <form className="my-3">
-                    <label for="tarik">Jumlah Penarikan</label>
+                    <label htmlFor="tarik">Jumlah Penarikan</label>
                     <input
                       min="1000"
                       max={saldo}
