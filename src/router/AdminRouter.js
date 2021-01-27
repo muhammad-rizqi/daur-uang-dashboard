@@ -15,14 +15,15 @@ import {
 } from "../screen/bendahara";
 import Profile from "../screen/Profile";
 
-const BendaharaRouter = ({ history }) => {
+const AdminRouter = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);
+
   const logout = () => {
     dispatch(clearToken());
   };
 
-  let path = "/bendahara";
+  let path = "/admin";
 
   return (
     <Router>
@@ -125,4 +126,4 @@ const BendaharaRouter = ({ history }) => {
   );
 };
 
-export default BendaharaRouter;
+export default AdminRouter;

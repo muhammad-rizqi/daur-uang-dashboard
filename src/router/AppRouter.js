@@ -15,6 +15,7 @@ import {
 import { getDataSetoran } from "../services/endpoint/penyetor";
 
 import { getToken } from "../services/storage/Token";
+import AdminRouter from "./AdminRouter";
 import BendaharaRouter from "./BendaharaRouter";
 
 export const AppRouter = () => {
@@ -26,9 +27,15 @@ export const AppRouter = () => {
     profile()
       .then((res) => {
         if (res.code === 200) {
-          dispatch(setUser(res.data.user));
+          if (res.data.user.role === 4 || res.data.user.role === 999) {
+            dispatch(setUser(res.data.user));
+            getData();
+          } else {
+            alert("Harap masuk di pernagkat mobile");
+          }
         }
         setSplash(false);
+        console.log(res);
       })
       .catch((e) => {
         console.log(e);
@@ -37,16 +44,19 @@ export const AppRouter = () => {
       });
   };
 
+  const getData = () => {
+    getSaldoPenjualan();
+    getDataPenjualan();
+    getDataSetoran();
+    getStok();
+    getNasabah();
+  };
+
   useEffect(() => {
     const dataToken = getToken();
     console.log(dataToken);
     if (dataToken !== undefined || dataToken === "") {
       dispatch(changeToken(dataToken));
-      getSaldoPenjualan();
-      getDataPenjualan();
-      getDataSetoran();
-      getStok();
-      getNasabah();
       getProfile();
     } else {
       setSplash(false);
@@ -71,5 +81,11 @@ export const AppRouter = () => {
     );
   }
 
-  return <BendaharaRouter />;
+  return user.role === 4 ? (
+    <BendaharaRouter />
+  ) : user.role === 999 ? (
+    <AdminRouter />
+  ) : (
+    <h1>403</h1>
+  );
 };

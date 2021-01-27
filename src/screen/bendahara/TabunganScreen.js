@@ -1,17 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const TabunganScreen = ({ history }) => {
   const { nasabah } = useSelector((state) => state);
   const { data } = nasabah.user;
-
+  const location = useLocation();
   const onClickNasabah = (user) => {
     history.push({
-      pathname: "/tabungan/" + user.id,
+      pathname: location.pathname + "/" + user.id,
       state: { user: user },
     });
   };
-
+  console.log(location);
   return (
     <div className="card table-responsive-md easion-card">
       <div className="card-header">

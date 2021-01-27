@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { changeToken } from "../../redux/action";
+import { changeToken, setUser } from "../../redux/action";
 import { login } from "../../services/endpoint/authServices";
+import { getNasabah } from "../../services/endpoint/nasabah";
+import {
+  getDataPenjualan,
+  getSaldoPenjualan,
+  getStok,
+} from "../../services/endpoint/penjual";
+import { getDataSetoran } from "../../services/endpoint/penyetor";
 import { getToken } from "../../services/storage/Token";
 
 function Login({ history }) {
@@ -18,8 +25,18 @@ function Login({ history }) {
     login(email, password)
       .then((result) => {
         if (result.code === 200) {
-          history.push("/");
-          dispatch(changeToken(result.data.token));
+          if (result.data.user.role === 4 || result.data.user.role === 999) {
+            dispatch(changeToken(result.data.token));
+            dispatch(setUser(result.data.user));
+            getData();
+          }
+          if (result.data.user.role === 4) {
+            history.push("/bendahara");
+          } else if (result.data.user.role === 999) {
+            history.push("/admin");
+          } else {
+            alert("Mohon masuk di perangkat mobile");
+          }
         } else {
           alert("Gagal Login");
         }
@@ -35,6 +52,14 @@ function Login({ history }) {
   const onGetToken = (e) => {
     console.log(getToken());
     e.preventDefault();
+  };
+
+  const getData = () => {
+    getSaldoPenjualan();
+    getDataPenjualan();
+    getDataSetoran();
+    getStok();
+    getNasabah();
   };
 
   return (

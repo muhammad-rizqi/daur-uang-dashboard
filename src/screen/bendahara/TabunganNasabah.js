@@ -12,6 +12,7 @@ const TabunganNasabah = ({ history }) => {
   const location = useLocation();
   const [user, setUser] = useState(null);
   const { nasabah } = useSelector((state) => state);
+  const { role } = useSelector((state) => state.user);
   const { userId } = useParams();
   const { data } = nasabah.penarikan;
   const [saldo, setSaldo] = useState("-");
@@ -42,7 +43,7 @@ const TabunganNasabah = ({ history }) => {
         .then((res) => {
           if (res.code === 200) {
             alert("berhasil");
-            history.push("/tabungan/" + userId);
+            history.push(location.pathname + "/" + userId);
           }
         })
         .catch((e) => {
@@ -86,60 +87,62 @@ const TabunganNasabah = ({ history }) => {
           Kembali
         </div>
       </div>
-
-      <button
-        type="button"
-        className="btn btn-primary my-3"
-        data-toggle="modal"
-        data-target="#myModal"
-      >
-        Tarik Tabungan
-      </button>
-      <div className="modal" id="myModal">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title">Tarik Tabungan</h4>
-              <button type="button" className="close" data-dismiss="modal">
-                &times;
-              </button>
-            </div>
-            <div className="modal-body">
-              <form className="my-3">
-                <label for="tarik">Jumlah Penarikan</label>
-                <input
-                  min="1000"
-                  max={saldo}
-                  type="number"
-                  className="form-control"
-                  id="tarik"
-                  placeholder="1000"
-                  value={tarik}
-                  onInput={(e) => {
-                    setTarik(e.target.value);
-                  }}
-                />
-              </form>
-              <button
-                type="submit"
-                className="btn btn-primary mb-2"
-                onClick={onClickTarik}
-                disabled={loading}
-              >
-                {!loading ? (
-                  "Tarik"
-                ) : (
-                  <>
-                    <span className="spinner-grow spinner-grow-sm"></span>
-                    Tarik
-                  </>
-                )}
-              </button>
+      {role === 4 && (
+        <>
+          <button
+            type="button"
+            className="btn btn-primary my-3"
+            data-toggle="modal"
+            data-target="#myModal"
+          >
+            Tarik Tabungan
+          </button>
+          <div className="modal" id="myModal">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h4 className="modal-title">Tarik Tabungan</h4>
+                  <button type="button" className="close" data-dismiss="modal">
+                    &times;
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <form className="my-3">
+                    <label for="tarik">Jumlah Penarikan</label>
+                    <input
+                      min="1000"
+                      max={saldo}
+                      type="number"
+                      className="form-control"
+                      id="tarik"
+                      placeholder="1000"
+                      value={tarik}
+                      onInput={(e) => {
+                        setTarik(e.target.value);
+                      }}
+                    />
+                  </form>
+                  <button
+                    type="submit"
+                    className="btn btn-primary mb-2"
+                    onClick={onClickTarik}
+                    disabled={loading}
+                  >
+                    {!loading ? (
+                      "Tarik"
+                    ) : (
+                      <>
+                        <span className="spinner-grow spinner-grow-sm"></span>
+                        Tarik
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-
+        </>
+      )}
       <ul className="nav nav-tabs">
         <li className="nav-item">
           <a className="nav-link active" data-toggle="tab" href="#penarikan">
