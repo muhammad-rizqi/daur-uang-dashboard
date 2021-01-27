@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 import { clearToken } from "../redux/action";
+import UserAdmin from "../screen/admin/UserAdmin";
 
 import {
   DashboardScreen,
@@ -52,6 +53,9 @@ const AdminRouter = ({ history }) => {
             </Link>
             <Link to={path + "/penjualan"} className="dash-nav-item">
               <i className="fas fa-luggage-cart"></i> Penjualan{" "}
+            </Link>
+            <Link to={path + "/users"} className="dash-nav-item">
+              <i className="fas fa-user"></i> User{" "}
             </Link>
           </nav>
         </div>
@@ -117,6 +121,7 @@ const AdminRouter = ({ history }) => {
                   component={PenjualanScreen}
                 />
                 <Route exact path={path + "/profile"} component={Profile} />
+                <Route exact path={path + "/users"} component={UserAdmin} />
               </Switch>
             </div>
           </main>

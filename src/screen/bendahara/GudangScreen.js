@@ -166,7 +166,7 @@ const GudangScreen = () => {
               <div className="modal-dialog">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h4 className="modal-title">Modal Heading</h4>
+                    <h4 className="modal-title">Edit Sampah</h4>
                     <button
                       type="button"
                       className="close"
@@ -292,7 +292,7 @@ const GudangScreen = () => {
                     <td>{sampah.harga}</td>
                     <td>{sampah.stok_gudang}</td>
                     {user.role === 999 && (
-                      <tr>
+                      <td>
                         <span
                           className="btn btn-secondary m-1"
                           data-toggle="modal"
@@ -310,7 +310,7 @@ const GudangScreen = () => {
                         >
                           <i className="fas fa-trash"></i>
                         </span>
-                      </tr>
+                      </td>
                     )}
                   </tr>
                 );
