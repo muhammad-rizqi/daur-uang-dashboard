@@ -10,7 +10,6 @@ import {
   getStok,
 } from "../../services/endpoint/penjual";
 import { getDataSetoran } from "../../services/endpoint/penyetor";
-import { getToken } from "../../services/storage/Token";
 
 function Login({ history }) {
   // sets the value of "message" to be "saved in browser storage"
@@ -49,11 +48,6 @@ function Login({ history }) {
     e.preventDefault();
   };
 
-  const onGetToken = (e) => {
-    console.log(getToken());
-    e.preventDefault();
-  };
-
   const getData = () => {
     getSaldoPenjualan();
     getDataPenjualan();
@@ -77,7 +71,7 @@ function Login({ history }) {
                 className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
-                placeholder="Enter email"
+                placeholder="Masukkan email"
                 onInput={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -101,17 +95,13 @@ function Login({ history }) {
                   "Sign in"
                 ) : (
                   <>
-                    <span class="spinner-grow spinner-grow-sm"></span>
+                    <span className="spinner-grow spinner-grow-sm"></span>
                     Signing in
                   </>
                 )}
               </button>
-              <Link
-                className="account-dialog-link"
-                to="/register/"
-                onClick={onGetToken}
-              >
-                Create an acoount
+              <Link className="account-dialog-link" to="/reset/">
+                Lupa kata sandi?
               </Link>
             </div>
           </form>

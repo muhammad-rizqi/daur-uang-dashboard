@@ -1,4 +1,4 @@
-import {api} from '../API/webapi';
+import { api } from "../API/webapi";
 
 export const register = (nama_lengkap, email, password, telepon, lokasi) => {
   const body = {
@@ -14,7 +14,7 @@ export const register = (nama_lengkap, email, password, telepon, lokasi) => {
     password_confirmation: password,
   };
 
-  return api('POST', '/register', body);
+  return api("POST", "/register", body);
 };
 
 export const login = (email, password) => {
@@ -23,9 +23,25 @@ export const login = (email, password) => {
     password,
   };
 
-  return api('POST', '/login', body);
+  return api("POST", "/login", body);
 };
 
 export const profile = () => {
-  return api('GET', '/profile');
+  return api("GET", "/profile");
+};
+
+export const reset = (email) => {
+  const body = {
+    email,
+  };
+
+  return api("POST", "/reset", body);
+};
+
+export const resetConfirm = (token, password) => {
+  const body = {
+    password,
+  };
+
+  return api("POST", "/reset-confirm/" + token, body);
 };

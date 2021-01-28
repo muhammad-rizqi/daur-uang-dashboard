@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { changeToken, setUser } from "../redux/action";
 import Login from "../screen/auth/login-screen";
-import Register from "../screen/auth/register-screen";
+import ResetPass from "../screen/auth/resetPass";
+import ResetConfirm from "../screen/auth/resetConfirm";
 import { profile } from "../services/endpoint/authServices";
 import { getNasabah } from "../services/endpoint/nasabah";
 import {
@@ -72,7 +73,8 @@ export const AppRouter = () => {
       <Router>
         <Switch>
           <Route path="/login" exact component={Login} />
-          <Route exact path="/register/" component={Register} />
+          <Route exact path="/reset/" component={ResetPass} />
+          <Route exact path="/reset-confirm/:token" component={ResetConfirm} />
           <Route exact path="*">
             <h1>404</h1>
           </Route>
