@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { toDate } from "../../services/helper/helper";
 
 const PenjualanScreen = () => {
   const { penjual } = useSelector((state) => state);
@@ -33,7 +34,7 @@ const PenjualanScreen = () => {
               return (
                 <tr>
                   <th scope="row">{index + 1}</th>
-                  <td>{jual.tanggal}</td>
+                  <td>{toDate(jual.tanggal)}</td>
                   <td>{jual.relation.pengurus.nama_lengkap}</td>
                   <td>{jual.relation.jenis_sampah.nama_kategori}</td>
                   <td>{jual.client}</td>

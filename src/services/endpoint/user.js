@@ -71,5 +71,5 @@ export const createUser = (nama_lengkap, email, telepon, role, password) => {
 };
 
 export const deleteUser = (userId) => {
-  return api("DELETE", `/users/${userId}`);
+  return api("DELETE", `/users/${userId}`, {});
 };

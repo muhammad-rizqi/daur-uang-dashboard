@@ -1,6 +1,6 @@
 import { clearToken } from "../../redux/action";
 import store from "../../redux/store";
-export const host = "https://dauruang.serverdakwah.online/api";
+export const host = "http://localhost:8080/api";
 
 export const api = (method, path, body = null, file = null) => {
   const { token } = store.getState();

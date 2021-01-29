@@ -7,6 +7,7 @@ import {
 } from "../../services/endpoint/nasabah";
 import { addTarik, getSaldo } from "../../services/endpoint/tabungan";
 import { getUserData } from "../../services/endpoint/user";
+import { toDate } from "../../services/helper/helper";
 
 const TabunganNasabah = () => {
   const location = useLocation();
@@ -188,7 +189,7 @@ const TabunganNasabah = () => {
                         <td>
                           <small>{tarik.id}</small>
                         </td>
-                        <td>{tarik.tanggal}</td>
+                        <td>{toDate(tarik.tanggal)}</td>
                         <td>{tarik.kredit}</td>
                         <td>{tarik.saldo}</td>
                       </tr>
@@ -228,7 +229,7 @@ const TabunganNasabah = () => {
                         <td>
                           <small>{setor.id}</small>
                         </td>
-                        <td>{setor.tanggal}</td>
+                        <td>{toDate(setor.tanggal)}</td>
                         <td>{setor.relation.jenis_sampah.nama_kategori}</td>
                         <td>{setor.berat}</td>
                         <td>{setor.debit}</td>

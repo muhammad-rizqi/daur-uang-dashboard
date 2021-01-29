@@ -14,7 +14,7 @@ export const addSampah = (nama_kategori, harga, stok_gudang) => {
 };
 
 export const deleteSampah = (sampahId) => {
-  return api("DELETE", "/sampah/" + sampahId);
+  return api("DELETE", "/sampah/" + sampahId, {});
 };
 
 export const editSampah = (sampahId, nama_kategori, harga, stok_gudang) => {
