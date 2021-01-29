@@ -18,6 +18,8 @@ import { getDataSetoran } from "../services/endpoint/penyetor";
 import { getToken } from "../services/storage/Token";
 import AdminRouter from "./AdminRouter";
 import BendaharaRouter from "./BendaharaRouter";
+import Landing from "../screen/auth/Landing";
+import Loading from "../screen/auth/Loading";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -65,7 +67,7 @@ export const AppRouter = () => {
   }, []);
 
   if (splash) {
-    return <h1>Loading...</h1>;
+    return <Loading />;
   }
 
   if (token === null || token === "") {
@@ -76,7 +78,7 @@ export const AppRouter = () => {
           <Route exact path="/reset/" component={ResetPass} />
           <Route exact path="/reset-confirm/:token" component={ResetConfirm} />
           <Route exact path="*">
-            <h1>404</h1>
+            <Landing />
           </Route>
         </Switch>
       </Router>
@@ -88,6 +90,6 @@ export const AppRouter = () => {
   ) : user.role === 999 ? (
     <AdminRouter />
   ) : (
-    <h1>403</h1>
+    <Landing />
   );
 };

@@ -27,7 +27,12 @@ function ResetPass() {
   return (
     <div className="form-screen">
       <a href="index.html" className="easion-logo">
-        <i className="fas fa-sun"></i> <span>Daur uang</span>
+        <img
+          src="/logo192.png"
+          alt="logo"
+          style={{ width: "30px", height: "30px", marginRight: "8px" }}
+        />{" "}
+        <span>Daur uang</span>
       </a>
       <div className="card account-dialog">
         <div className="card-header bg-primary text-white">Reset Password</div>

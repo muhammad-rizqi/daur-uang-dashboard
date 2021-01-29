@@ -15,7 +15,7 @@ import {
 } from "../screen/bendahara";
 import Profile from "../screen/Profile";
 
-const BendaharaRouter = ({ history }) => {
+const BendaharaRouter = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);
   const logout = () => {
@@ -33,7 +33,12 @@ const BendaharaRouter = ({ history }) => {
               <i className="fas fa-bars"></i>
             </a>
             <Link to={path} className="easion-logo">
-              <i className="fas fa-sun"></i> <span>Daur Uang</span>
+              <img
+                src="/logo192.png"
+                alt="logo"
+                style={{ width: "30px", height: "30px", marginRight: "8px" }}
+              />{" "}
+              <span>Daur Uang</span>
             </Link>
           </header>
           <nav className="dash-nav-list">
